@@ -1,6 +1,6 @@
 {
   "package": {
-    "name": "configuration",
+    "name": "logging",
     "repo": "maven",
     "subject": "inveasy",
     "desc": "Logging utilities for Inveasy framework",
