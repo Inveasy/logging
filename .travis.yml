@@ -2,30 +2,32 @@ language: java
 addons:
   sonarcloud:
     organization: inveasy
+
 script:
 - mvn clean install sonar:sonar -Dsonar.login=${SONAR_LOGIN} -B -V
 cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
+
 deploy:
-- provider: releases
-  api_key:
-    secure: LE5DrNNMgkDDQVd3mkWFGrCRdF37qMAoMf0GKeDe4y/5kDTmf3hC9Rfv++vWfbAo5uXybmKG+Y+5JoH5BBcD1VYzg8H0EnTIjJivdZyooKPAYsfGUH4cLML5UAOKuy0uTjZuejV/P3WOQeUJu4MBGmCiyTDPvMzerTaaXSSzZJDkmbpRpMFxYMnk96sI663tTAFPO8TusCnXD9sVCfPjcCACZbJuMVdO+BXqgny6PplN4uIf9yxwEQsoz2ZGLxbBTN0N4ZMaD6U3iAHMOqkoi31gLv+hz5suvOmZL8gy5dkmQox6TuW7Zj0nBFqnXihvgBXxqTL0dko6n+Q68IvDTl3tE3Szw1mxZ89yx2ct1D9yytbkZKEN0YELvau9jnmpkDLwZcVb41kyqzuw581nf/GZ3b0bbU1YYmGvJDWfQuP6t6Fy6HhoUrNDSupqnwUh09CCZMdTMiprEL4cnMcUQtxkEwpMe6HKmsMbxMZ/GKulNNxgSkavvyTNfxuhidMnoy5Q/fZaq6QhNwTT1v7vucAjXaoXA4eeIhLQQZimmdYcPSXQMcn2SFL9LEqiLb+aojFENHiv/zDoH2zUTCP+tJSw8gA2WHJtp8Q+7O6Wv1iv46/meqqHRiXFBSdVc5d97KXaj2y30g0UecGE4EpMCDbkoacZtWow4a7N5iJioqc=
-  file_glob: true
-  file: target/*.jar
-  skip_cleanup: true
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^[0-9]+\.[0-9]+\.[0-9]+$
-    tags: true
-- provider: bintray
-  file: bintray-descriptor.json
-  key:
-    secure: SHzkWgQhU/c84qyJ0jcTTzSVDYZv4kQP1Y6HHkNhP5C/lmAPwhE7gpPTpEwZ1eCT5TpN+gLcMSU8Qtge1QIaRx1mfEzeiVgH0zF2IpIOCGqPUgeuF/t4Yhv7LUnIVd6RjbARsMblJOor1Yjv04T951UGevRZaw+du4DkpmNFlNh7jl3tS8qO9lV9fYgBf5w4jRlqxeOnkws7dtwuovIrOL3xJh8q0AWXmbIAoPMFQpx9Z2ULgrVSWcR9ZNvMfMfFNkiY167neFq+hHMj/2RzAr6Vz92in0ciP4ahJkWMdL3qvQ6dovLBfQvnKv7iescccxJISdaOwx8Dy3hL4L+2gAaZ9io5BFiByPRIHhRqDZhLL65a2/aKr3Xg62O1FMsVbgOvzZHYFy+8fdXhbG85Q51WoR7BS5Hjk8jxU4meokbx5CoY/tNZjLWPOI0sO6oNE+q1fjAp4XQ9jHz1n+rwnoSqtfFJWJ09ht6Ap1mOXGIQDk3U4KlaqG9WCQ/66QSaHdCO5MyJOF/jUnwEVz4PCM8FiqmIKwACr7w5I59W6r3L5L8xSRGxxMZkNm50/sPt+6w89/JGaaTyOfm3V7Ac4PWi9V7Fz+6XuzuJER2dyhPI+dpXxzq48g0n93vsgZqLmm5Kd6dJscweran1o/WI0ldMmyNEym4s1B4oGPGK9aQ=
-  user: goveranter
-  skip_cleanup: true
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^[0-9]+\.[0-9]+\.[0-9]+$
-    tags: true
+  - provider: releases
+    api_key:
+      secure: RtWJV67ude8HHaWnS0QUT7yWisDTwpQMz4ryV2eL/qTeM1AkNe0Lbmm000mbXVukioWff6dP90Gs7dOwfROgLnpHLKnMI5XO9kAVk1uMJxd7/q1GT24WU97Sl6UxJz/mFJpzY14amStbhdvPTXGB9cdGmACZQI5kgBhV8BXu4WXfL3w14qZUEsJ+zI5mUwBT9AKpmMQrTbSxN/wHVG0DZbVxx7OZpSgTd09qHvhla3jKqpD4eJ/q5NYiSBkgXrHbgmbbdZEWaNAeDMN/1lRvU3CnXDwAKWNgH810h+ep0uDJxM3uh1/yiBzwsFG5E6IrR26SOffhKEun7UtHJZrvACinY9EQzHd/99Bsv+06CtLI3qSu7599ZqhjGEGiEi9gBabfSBb+PBDBUymNfeet9tdrsPOu05PaEczvEmrNOC7sKVBijn0ZtvL7HXckga6+btFC2TmuMpFqT4ejETIQh0sAe1dlWoU05+1INwh6apObfxcaINsbAsWk+R38rDnvFGb9Fm6TsfcwuAey3AqiCI+YN7xnvErpRSbFagArZJi/2Ycmu0UEEHC1PJ085xzBU9asGpcN5ri08wzqM4YMy1fOumZfMfXzoL/+bM3BQu3kdzoo6pj9uOP+qMlwvqi4JcwHH+S/4g/Hw2l/DaaIiJPDBOUINLU/fE2Udrr0a1I=
+    file_glob: true
+    file: target/*.jar
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+      tags: true
+  - provider: bintray
+    file: bintray-descriptor.json
+    key:
+      secure: SHzkWgQhU/c84qyJ0jcTTzSVDYZv4kQP1Y6HHkNhP5C/lmAPwhE7gpPTpEwZ1eCT5TpN+gLcMSU8Qtge1QIaRx1mfEzeiVgH0zF2IpIOCGqPUgeuF/t4Yhv7LUnIVd6RjbARsMblJOor1Yjv04T951UGevRZaw+du4DkpmNFlNh7jl3tS8qO9lV9fYgBf5w4jRlqxeOnkws7dtwuovIrOL3xJh8q0AWXmbIAoPMFQpx9Z2ULgrVSWcR9ZNvMfMfFNkiY167neFq+hHMj/2RzAr6Vz92in0ciP4ahJkWMdL3qvQ6dovLBfQvnKv7iescccxJISdaOwx8Dy3hL4L+2gAaZ9io5BFiByPRIHhRqDZhLL65a2/aKr3Xg62O1FMsVbgOvzZHYFy+8fdXhbG85Q51WoR7BS5Hjk8jxU4meokbx5CoY/tNZjLWPOI0sO6oNE+q1fjAp4XQ9jHz1n+rwnoSqtfFJWJ09ht6Ap1mOXGIQDk3U4KlaqG9WCQ/66QSaHdCO5MyJOF/jUnwEVz4PCM8FiqmIKwACr7w5I59W6r3L5L8xSRGxxMZkNm50/sPt+6w89/JGaaTyOfm3V7Ac4PWi9V7Fz+6XuzuJER2dyhPI+dpXxzq48g0n93vsgZqLmm5Kd6dJscweran1o/WI0ldMmyNEym4s1B4oGPGK9aQ=
+    user: goveranter
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+      tags: true
