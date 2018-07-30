@@ -1,0 +1,25 @@
+<configuration>
+	<conversionRule conversionWord="color" converterClass="io.inveasy.logging.CustomColorCompositeConverter" />
+	<conversionRule conversionWord="fb" converterClass="io.inveasy.logging.FallbackCompositeConverter" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%color(%fb(%X{akkaTimestamp}){%d}){faint} %color(%5.5level){highlight} %color([%21.21fb(%X{sourceThread}){%t}]){faint} - %color(%-30.30logger{29}){94,italic} %color(%-30.30X{akkaSource} ){34}%color(:){faint} %color(%m){highlight,text}%n%ex</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ACCESS_FILE" class="ch.qos.logback.core.FileAppender">
+		<file>logs/access.log</file>
+		<encoder>
+			<pattern>%d %t %X{serverName} %X{remoteHost} %X{requestPath} %X{requestContentType} %X{responseContentType} %X{contentLength} %X{statusCode} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="access" level="DEBUG" additivity="false">
+		<appender-ref ref="ACCESS_FILE" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
