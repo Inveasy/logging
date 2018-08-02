@@ -35,7 +35,7 @@
 		<appender-ref ref="ACCESS_FILE" />
 	</logger>
 
-	<root level="INFO">
+	<root level="${logLevel:-INFO}">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
